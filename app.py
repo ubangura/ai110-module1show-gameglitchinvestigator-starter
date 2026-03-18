@@ -1,6 +1,7 @@
 import random
 import streamlit as st
 
+# REFACTOR: Created better separation of concerns by moving game logic to `logic_utils.py`
 from logic_utils import get_range_for_difficulty, parse_guess, check_guess, update_score
 
 st.set_page_config(page_title="Glitchy Guesser", page_icon="🎮")
@@ -31,6 +32,7 @@ st.sidebar.caption(f"Attempts allowed: {attempt_limit}")
 if "secret" not in st.session_state:
     st.session_state.secret = random.randint(low, high)
 
+# FIX: Made starting attempts 0 instead of 1 to align with user expectations
 if "attempts" not in st.session_state:
     st.session_state.attempts = 0
 
@@ -94,10 +96,8 @@ if submit:
     else:
         st.session_state.history.append(guess_int)
 
-        if st.session_state.attempts % 2 == 0:
-            secret = str(st.session_state.secret)
-        else:
-            secret = st.session_state.secret
+        # Keep the secret as a consistent type so guess comparisons behave correctly.
+        secret = st.session_state.secret
 
         outcome, message = check_guess(guess_int, secret)
 
