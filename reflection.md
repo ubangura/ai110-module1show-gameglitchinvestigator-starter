@@ -52,7 +52,7 @@ For example, after fixing the hint logic, I ran the pytest cases for the `check_
 - How would you explain Streamlit "reruns" and session state to a friend who has never used Streamlit?
 - What change did you make that finally gave the game a stable secret number?
 
-The session states keeps certain pieces of information we want to remain across reruns. We do store the secret number in session state, but 
+"Reruns" reruns the entire script to keep the UI up-to-date with state changes. Every button click can update the UI and rerun teh script. But what if want to store some data and not lose it after every click. The session states keeps certain pieces of information we want to remain across reruns. We do store the secret number in session state, but on every even attempt changing the type to a 'str'. So, the user input will be one type and the secret another, leading to a mismatch. Removing the check for even attempts and casting the secret fixed the issue.
 
 ---
 
